@@ -1,0 +1,10 @@
+/bin/
+/target/
+# /runconfigs/*.xml
+/.idea
+/java/orellyJava/orellyJava.iml
+/.settings/*
+/temp/
+/test-output/
+/src/core/core.iml
+/orellyJava.iml
