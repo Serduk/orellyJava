@@ -13,8 +13,8 @@ public class SimpleDotComGame {
         String result = "miss";
         boolean isExist = false;
 
-        for (Integer anUserChoose1 : userChoose) {
-            if (anUserChoose1 == guess) {
+        for (Integer anUserChoose : userChoose) {
+            if (anUserChoose == guess) {
                 result = "You already choose this num";
                 isExist = true;
                 break;
