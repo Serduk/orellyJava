@@ -1,6 +1,6 @@
 package mainRun;
 
-import workClasses.Dog;
+import workClasses.animals.Dog;
 
 public class DogTestDrive {
 	public static void main(String[] args) {
