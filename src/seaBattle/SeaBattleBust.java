@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Main class for sea battle game
- *
+ * <p>
  * Created by serdyuk on 2/18/17.
  */
 public class SeaBattleBust {

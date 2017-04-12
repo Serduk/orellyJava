@@ -7,10 +7,9 @@ package workClasses.animals;
 public abstract class Animal {
     protected int size, wait, height;
 
-    public abstract void eat();
-
-    public void roam() {
-        System.out.println("roam");
+    public void eat() {
+        System.out.println("eat");
     }
 
+    public abstract void roam();
 }
