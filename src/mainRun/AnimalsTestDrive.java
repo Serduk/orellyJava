@@ -28,10 +28,10 @@ public class AnimalsTestDrive {
         Dog aDog = new Dog();
         Object object = getObject(aDog);
         Dog object2 = (Dog) object;
+        object2.roam();
 
         System.out.println("Dog has hashCode: " + aDog.hashCode());
         System.out.println("Object has hashCode: " + object.hashCode());
-        System.out.println(object2.roam(););
     }
 
 
