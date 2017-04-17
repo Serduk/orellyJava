@@ -20,5 +20,22 @@ public class AnimalsTestDrive {
         animal[0].eat();
         animal[1].eat();
         animal[2].roam();
+
+        go();
+    }
+
+    private static void go() {
+        Dog aDog = new Dog();
+        Object object = getObject(aDog);
+        Dog object2 = (Dog) object;
+
+        System.out.println("Dog has hashCode: " + aDog.hashCode());
+        System.out.println("Object has hashCode: " + object.hashCode());
+        System.out.println(object2.roam(););
+    }
+
+
+    private static Object getObject(Object o) {
+        return o;
     }
 }
