@@ -1,8 +1,6 @@
 package mainRun;
 
-import workClasses.animals.AnimalList;
-import workClasses.animals.Cat;
-import workClasses.animals.Dog;
+import workClasses.animals.*;
 
 /**
  * test drive class for AnimalList Method
@@ -13,6 +11,9 @@ public class AnimalListTestDrive {
         AnimalList animalLists = new AnimalList(5);
         Dog dog = new Dog();
         Cat cat = new Cat();
+        Duck duck = new Duck(13);
+        Duck duck1 = new Duck();
+        SuperDuck superDuck = new SuperDuck(13);
 
         animalLists.add(dog);
         animalLists.add(cat);

@@ -5,7 +5,7 @@ package workClasses.animals;
  * Created by serdyuk on 4/12/17.
  */
 public abstract class Animal {
-    protected int size, wait, height;
+    protected int size, weight, height;
 
     public void eat() {
         System.out.println("eat");
