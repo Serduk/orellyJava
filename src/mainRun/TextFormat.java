@@ -1,5 +1,7 @@
 package mainRun;
 
+import java.util.Date;
+
 /**
  * Class work: Text Formating for soup/console/terminal/etc output
  * Created by serdyuk on 4/23/17.
@@ -17,5 +19,11 @@ public class TextFormat {
         double two = 12235.214123;
         s = String.format("%,d and second number %,.2f", one, two);
         System.out.println(s);
+
+        System.out.println(String.format("%tc", new Date()));
+        System.out.println(String.format("%tr", new Date()));
+//        System.out.println(String.format("%tA, %tB, %td", new Date()));
+        System.out.println(String.format("%tA, %<tB, %<td", new Date()));
+
     }
 }
