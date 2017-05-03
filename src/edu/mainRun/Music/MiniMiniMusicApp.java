@@ -15,7 +15,7 @@ public class MiniMiniMusicApp {
     public void play() {
         System.out.println("Try execute Sequencer");
         try {
-//            Get Sequencer, and open him. at firts - his closed
+//            Get Sequencer, and open him. at first - his closed
             Sequencer sequencer = MidiSystem.getSequencer();
             sequencer.open();
 
