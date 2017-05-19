@@ -18,7 +18,7 @@ public class SimpleGUI1 {
         frame.setVisible(true);
 
 //        public void changeIt() {
-//            button.setText("I was clicked");
+//            buttonRedraw.setText("I was clicked");
 //        }
     }
 

@@ -9,10 +9,10 @@ import java.awt.event.ActionListener;
  * Created by serdyuk on 5/14/17.
  */
 public class SimpleGUI1B implements ActionListener {
-    JButton button;
+    private JButton button;
 
 
-    public void go() {
+    private void go() {
         JFrame frame = new JFrame();
         button = new JButton("Click me");
 
