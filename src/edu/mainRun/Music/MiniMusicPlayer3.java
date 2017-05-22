@@ -17,7 +17,7 @@ public class MiniMusicPlayer3 {
         miniMusicPlayer3.go();
     }
 
-    public void setUpGUI() {
+    private void setUpGUI() {
         myDrawPanel = new MyDrawPanel();
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setContentPane(myDrawPanel);
@@ -25,7 +25,7 @@ public class MiniMusicPlayer3 {
         jFrame.setVisible(true);
     }
 
-    public void go() {
+    private void go() {
         setUpGUI();
         try {
             Sequencer sequencer = MidiSystem.getSequencer();
@@ -51,7 +51,7 @@ public class MiniMusicPlayer3 {
         }
     }
 
-    public MidiEvent makeEvent(int comd, int chan, int one, int two, int tick) {
+    private MidiEvent makeEvent(int comd, int chan, int one, int two, int tick) {
         MidiEvent event = null;
 
         try {

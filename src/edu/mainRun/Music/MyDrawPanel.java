@@ -10,7 +10,7 @@ import java.awt.*;
  * Created by serdyuk on 5/22/17.
  */
 public class MyDrawPanel extends JPanel implements ControllerEventListener {
-    boolean msg = false;
+    private boolean msg = false;
 
     @Override
     public void controlChange(ShortMessage event) {

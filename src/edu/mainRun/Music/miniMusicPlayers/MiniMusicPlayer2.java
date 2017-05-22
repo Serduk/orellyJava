@@ -2,7 +2,6 @@ package edu.mainRun.Music.miniMusicPlayers;
 
 import javax.sound.midi.*;
 
-import static edu.mainRun.Music.miniMusicPlayers.MiniMusicPlayer1.makeEvent;
 
 /**
  * Add event listeners
@@ -14,7 +13,7 @@ public class MiniMusicPlayer2 implements ControllerEventListener {
         player2.go();
     }
 
-    void go() {
+    private void go() {
         try {
             Sequencer sequencer = MidiSystem.getSequencer();
             sequencer.open();
@@ -45,7 +44,7 @@ public class MiniMusicPlayer2 implements ControllerEventListener {
         System.out.println("Olololo");
     }
 
-    public MidiEvent makeEvent(int comd, int chan, int one, int two, int tick) {
+    private MidiEvent makeEvent(int comd, int chan, int one, int two, int tick) {
         MidiEvent event = null;
 
         try {
