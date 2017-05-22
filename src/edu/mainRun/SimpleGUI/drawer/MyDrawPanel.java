@@ -8,6 +8,11 @@ import java.awt.*;
  * Created by serdyuk on 5/19/17.
  */
 public class MyDrawPanel extends JPanel {
+//    int x, y;
+//    public MyDrawPanel(int x, int y) {
+//        this.x = x;
+//        this.y = y;
+//    }
 //    public void paintComponent(Graphics graphics) {
 //        graphics.setColor(Color.orange);
 //        Image image = new ImageIcon("resources/img/desk.jpg").getImage();
@@ -39,6 +44,7 @@ public class MyDrawPanel extends JPanel {
         GradientPaint gradientPaint = new GradientPaint(70, 70, startColor, 150, 150, endColor);
         g2d.setPaint(gradientPaint);
         g2d.fillOval(randomizer(100), randomizer(100), 100, 100);
+//        g2d.fillOval(x, y, 100, 100);
     }
 
     private int randomizer(int size) {

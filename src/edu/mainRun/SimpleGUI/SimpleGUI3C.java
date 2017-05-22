@@ -17,8 +17,8 @@ public class SimpleGUI3C {
     JButton buttonSetLabel;
     JButton buttonMove;
 
-    int x = 70;
-    int y = 70;
+//    int x = 70;
+//    int y = 70;
 
     public static void main(String[] args) {
         SimpleGUI3C simpleGUI3C = new SimpleGUI3C();
@@ -38,6 +38,7 @@ public class SimpleGUI3C {
 
         buttonMove = new JButton("Move Me");
 
+//        MyDrawPanel drawPanel = new MyDrawPanel(x, y);
         MyDrawPanel drawPanel = new MyDrawPanel();
 
         jFrame.getContentPane().add(BorderLayout.SOUTH, buttonRedraw);
@@ -45,6 +46,17 @@ public class SimpleGUI3C {
         jFrame.getContentPane().add(BorderLayout.WEST, buttonSetLabel);
         jFrame.setSize(300, 300);
         jFrame.setVisible(true);
+
+//        for (int i = 0; i < 130; i++) {
+//            int y = i;
+//
+//            drawPanel.repaint();
+//            try {
+//                Thread.sleep(50);
+//            } catch (Exception e) {
+//                System.out.println("Something Wrong with wait");
+//            }
+//        }
 
 
     }
@@ -54,6 +66,9 @@ public class SimpleGUI3C {
         @Override
         public void actionPerformed(ActionEvent e) {
             buttonSetLabel.setText("Ouch!");
+            if (buttonSetLabel.getText().equals("Ouch")) {
+                buttonSetLabel.setText("I am a label");
+            }
         }
     }
 
