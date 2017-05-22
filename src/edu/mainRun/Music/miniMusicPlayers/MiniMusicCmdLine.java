@@ -1,4 +1,4 @@
-package edu.mainRun.Music;
+package edu.mainRun.Music.miniMusicPlayers;
 
 import javax.sound.midi.*;
 
