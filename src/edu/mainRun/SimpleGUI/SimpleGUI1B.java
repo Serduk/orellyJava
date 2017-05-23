@@ -1,6 +1,7 @@
 package edu.mainRun.SimpleGUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,6 +16,8 @@ public class SimpleGUI1B implements ActionListener {
     private void go() {
         JFrame frame = new JFrame();
         button = new JButton("Click me");
+        Font bigFont = new Font("serif", Font.BOLD, 28);
+        button.setFont(bigFont);
 
         button.addActionListener(this);
 
