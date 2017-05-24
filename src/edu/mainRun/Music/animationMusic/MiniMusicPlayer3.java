@@ -1,4 +1,4 @@
-package edu.mainRun.Music;
+package edu.mainRun.Music.animationMusic;
 
 import javax.sound.midi.*;
 import javax.swing.*;
