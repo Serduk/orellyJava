@@ -13,14 +13,15 @@ import java.util.List;
  * Created by serdyuk on 5/24/17.
  */
 public class BeatBox {
-    JPanel mainPanel;
-    List<JCheckBox> checkBoxList;
-    Sequencer sequencer;
-    Sequence seq;
-    Track track;
-    JFrame theFrame;
+    private JPanel mainPanel;
+    private List<JCheckBox> checkBoxList;
+    private Sequencer sequencer;
+    private Sequence seq;
+    private Track track;
+    private JFrame theFrame;
 
-    String[] instrumentName = {
+    //Instruments name
+    private String[] instrumentName = {
             "Bass Drum",
             "Acoustic Snare",
             "Crash Cymbal",
@@ -38,17 +39,19 @@ public class BeatBox {
             "Super Conga",
             "Super Super Conga"
     };
+    //Different drums button
     int[] instruments = {35, 42, 46, 38, 49, 39, 50, 60, 70, 72, 64, 56, 58, 47, 67, 63};
 
     public static void main(String[] args) {
         new BeatBox().buildGUI();
     }
 
-    public void buildGUI() {
+    private void buildGUI() {
         theFrame = new JFrame("Cyber BitBox");
         theFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         BorderLayout layout = new BorderLayout();
         JPanel background = new JPanel(layout);
+        //Add delimiter between all elements on background
         background.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         checkBoxList = new ArrayList<>();
@@ -86,6 +89,7 @@ public class BeatBox {
         mainPanel = new JPanel(gridLayout);
         background.add(BorderLayout.CENTER, mainPanel);
 
+//      Create Checkbox, add "false" for each checkBox, then add each checkbox to arrayList, and on panel
         for (int i = 0; i < 256; i++) {
             JCheckBox c = new JCheckBox();
             c.setSelected(false);
@@ -100,7 +104,8 @@ public class BeatBox {
         theFrame.setVisible(true);
     }
 
-    public void setUpMidi() {
+//    Simple code for setUp MIDI for get Sequencer and and track
+    private void setUpMidi() {
         try {
             sequencer = MidiSystem.getSequencer();
             sequencer.open();
@@ -112,19 +117,25 @@ public class BeatBox {
         }
     }
 
-    public void buildTrackAndStart() {
+    private void buildTrackAndStart() {
+//        Create array for each instrument for all 16 takts;
         int [] trackList = null;
 
+//        remove ald track, and create new
         seq.deleteTrack(track);
         track = seq.createTrack();
 
+//        Do this for each row, its mean for bass, congo, etc
         for (int i = 0; i < 16; i++) {
             trackList = new int[16];
 
+//            setUpBtn who show as instrumetn (bass, congo, etc). Array contain MIDI-int for each instrument
             int key = instruments[i];
 
+//            do this for each tackts in current row
             for (int j = 0; j < 16; j++) {
                 JCheckBox jc = (JCheckBox) checkBoxList.get(j + (16 * i));
+//                if boolean is true -> set key in current array slot
                 if (jc.isSelected()) {
                     trackList[j] = key;
                 } else {
@@ -132,6 +143,7 @@ public class BeatBox {
                 }
             }
 
+//            For current instrument, and for each 16 tackts -> create event and add them on track;
             makeTracks(trackList);
             track.add(makeEvent(176, 1, 127, 0, 16));
         }
@@ -139,6 +151,7 @@ public class BeatBox {
         track.add(makeEvent(192, 9, 1, 0, 15));
         try {
             sequencer.setSequence(seq);
+//            can set count of loop, or neverending loop
             sequencer.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
             sequencer.start();
             sequencer.setTempoInBPM(120);
@@ -162,6 +175,7 @@ public class BeatBox {
         }
     }
 
+//    set temp more fast
     public class MyUpTempoListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -170,6 +184,7 @@ public class BeatBox {
         }
     }
 
+//    set temp more slowly
     public class MyDownTempoListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
