@@ -193,7 +193,8 @@ public class BeatBox {
         }
     }
 
-    public void makeTracks (int[] list) {
+//    Method create events for one instrument per one loop run, for each 16 takts.
+    private void makeTracks(int[] list) {
         for (int i = 0; i < 16; i++) {
             int key = list[i];
 
@@ -204,7 +205,7 @@ public class BeatBox {
         }
     }
 
-    public MidiEvent makeEvent (int comd, int chan, int one, int two, int tick) {
+    private MidiEvent makeEvent(int comd, int chan, int one, int two, int tick) {
         MidiEvent event = null;
         try {
             ShortMessage a = new ShortMessage();
