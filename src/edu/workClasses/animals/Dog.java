@@ -1,9 +1,11 @@
 package edu.workClasses.animals;
 
-public class Dog extends Animal {
+import java.io.Serializable;
+
+public class Dog extends Animal implements Serializable {
     public int size = 0;
     public String breed;
-    public String name;
+    transient public String name;
 
     @Override
     public void eat() {

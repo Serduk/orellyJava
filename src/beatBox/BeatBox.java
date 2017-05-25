@@ -1,4 +1,4 @@
-package edu.mainRun.Music;
+package beatBox;
 
 import javax.sound.midi.*;
 import javax.swing.*;
