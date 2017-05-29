@@ -8,6 +8,11 @@ import java.io.*;
  */
 public class GameSaverTest {
     public static void main(String[] args) {
+
+        /*
+        * USER: serialver CLASSNAME for get serial version
+        * CHECK SERIAL VERSION FOR EACH CLASS, IF YOU DONT WONT ANY EXCEPTION
+        * */
         String filePath = "resources/serializableData/game.ser";
 
 //        Create 3 object for test
