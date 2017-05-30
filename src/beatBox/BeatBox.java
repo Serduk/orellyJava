@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,9 @@ import java.util.List;
  * BeatBox player
  * Created by serdyuk on 5/24/17.
  */
-public class BeatBox {
+public class BeatBox implements Serializable {
+    private String pathToFile = "resources/serializableData/";
+    private String fileName = "lastVersion.ser";
     private JPanel mainPanel;
     private List<JCheckBox> checkBoxList;
     private Sequencer sequencer;
@@ -73,6 +76,16 @@ public class BeatBox {
         downTempo.addActionListener(new MyDownTempoListener());
         buttonBox.add(downTempo);
 
+//        Save data for play on nex time
+        JButton serializableBeats = new JButton("SerializeIt");
+        serializableBeats.addActionListener(new MySerializableDataBeatBox());
+        buttonBox.add(serializableBeats);
+
+//        upload data from ser file. last beatBox temp
+        JButton restoreLastData = new JButton("Restore");
+        restoreLastData.addActionListener(new MyRestoreLastDataFromSerializable());
+        buttonBox.add(restoreLastData);
+
         Box nameBox = new Box(BoxLayout.Y_AXIS);
         for (int i = 0; i < 16; i++) {
             nameBox.add(new Label(instrumentName[i]));
@@ -104,7 +117,7 @@ public class BeatBox {
         theFrame.setVisible(true);
     }
 
-//    Simple code for setUp MIDI for get Sequencer and and track
+    //    Simple code for setUp MIDI for get Sequencer and and track
     private void setUpMidi() {
         try {
             sequencer = MidiSystem.getSequencer();
@@ -119,7 +132,7 @@ public class BeatBox {
 
     private void buildTrackAndStart() {
 //        Create array for each instrument for all 16 takts;
-        int [] trackList = null;
+        int[] trackList = null;
 
 //        remove ald track, and create new
         seq.deleteTrack(track);
@@ -161,6 +174,7 @@ public class BeatBox {
 
 
     }
+
     public class MyStartListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -175,7 +189,7 @@ public class BeatBox {
         }
     }
 
-//    set temp more fast
+    //    set temp more fast
     public class MyUpTempoListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -184,7 +198,7 @@ public class BeatBox {
         }
     }
 
-//    set temp more slowly
+    //    set temp more slowly
     public class MyDownTempoListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -193,14 +207,41 @@ public class BeatBox {
         }
     }
 
-//    Method create events for one instrument per one loop run, for each 16 takts.
+    //    for serializable. Add listener to button serializet. for save all data
+    public class MySerializableDataBeatBox implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(pathToFile + fileName));
+                outputStream.writeObject(this);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public class MyRestoreLastDataFromSerializable implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(pathToFile + fileName));
+                Object box = inputStream.readObject();
+                BeatBox beatBox = (BeatBox) box;
+                beatBox.buildTrackAndStart();
+            } catch (IOException | ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    //    Method create events for one instrument per one loop run, for each 16 takts.
     private void makeTracks(int[] list) {
         for (int i = 0; i < 16; i++) {
             int key = list[i];
 
             if (key != 0) {
                 track.add(makeEvent(144, 9, key, 100, i));
-                track.add(makeEvent(128, 9, key, 100, i+1));
+                track.add(makeEvent(128, 9, key, 100, i + 1));
             }
         }
     }
