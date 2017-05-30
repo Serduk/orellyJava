@@ -14,6 +14,8 @@ import java.util.List;
  * Created by serdyuk on 5/24/17.
  */
 public class BeatBox implements Serializable {
+    private static final int instrumentBeatSize = 256; //instrument size in MIDI class. more than 256 -> cant play
+
     private String pathToFile = "resources/serializableData/";
     private String fileName = "lastVersion.ser";
     private JPanel mainPanel;
@@ -103,7 +105,7 @@ public class BeatBox implements Serializable {
         background.add(BorderLayout.CENTER, mainPanel);
 
 //      Create Checkbox, add "false" for each checkBox, then add each checkbox to arrayList, and on panel
-        for (int i = 0; i < 256; i++) {
+        for (int i = 0; i < instrumentBeatSize; i++) {
             JCheckBox c = new JCheckBox();
             c.setSelected(false);
             checkBoxList.add(c);
@@ -211,9 +213,23 @@ public class BeatBox implements Serializable {
     public class MySerializableDataBeatBox implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+//            create boolean array for save all state
+            boolean[] checkboxState = new boolean[instrumentBeatSize];
+
+//            check all checkBoxes in frame, if checkBox is selected -> put him to array
+            for (int i = 0; i < instrumentBeatSize; i++) {
+                JCheckBox checkBox = (JCheckBox) checkBoxList.get(i);
+
+                if (checkBox.isSelected()) {
+                    checkboxState[i] = true;
+                } else {
+                    checkboxState[i] = false;
+                }
+            }
+
             try {
                 ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(pathToFile + fileName));
-                outputStream.writeObject(this);
+                outputStream.writeObject(checkboxState);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -223,14 +239,25 @@ public class BeatBox implements Serializable {
     public class MyRestoreLastDataFromSerializable implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            boolean[] checkBoxState = null;
             try {
                 ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(pathToFile + fileName));
-                Object box = inputStream.readObject();
-                BeatBox beatBox = (BeatBox) box;
-                beatBox.buildTrackAndStart();
+                checkBoxState = (boolean[]) inputStream.readObject();
             } catch (IOException | ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
+
+            for (int i = 0; i < instrumentBeatSize; i++) {
+                JCheckBox check = (JCheckBox) checkBoxList.get(i);
+                if (checkBoxState != null && checkBoxState[i]) {
+                    check.setSelected(true);
+                } else {
+                    check.setSelected(false);
+                }
+            }
+
+            sequencer.stop();
+            buildTrackAndStart();
         }
     }
 
