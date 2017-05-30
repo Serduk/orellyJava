@@ -1,7 +1,6 @@
 package edu.mainRun.quizCardGame;
 
 import javax.swing.*;
-import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,12 +30,13 @@ public class QuizCardBuilder {
         frame = new JFrame("Quiz Card Builder");
         JPanel mainPanel = new JPanel();
         Font bigFont = new Font("sanserif", Font.BOLD, 24);
+
         question = new JTextArea(6, 20);
         question.setLineWrap(true);
         question.setWrapStyleWord(true);
         question.setFont(bigFont);
 
-        JScrollPane qScroller = new JScrollPane(answer);
+        JScrollPane qScroller = new JScrollPane(question);
         qScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         qScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 

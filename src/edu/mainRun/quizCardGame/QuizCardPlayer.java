@@ -96,7 +96,7 @@ public class QuizCardPlayer {
     }
 
     private void loadFile(File file) {
-        cardList = new ArrayList<QuizCard>();
+        cardList = new ArrayList<>();
         try {
             /*
             * Create new buffered reader, connected with file reader.

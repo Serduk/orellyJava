@@ -12,7 +12,7 @@ public class QuizCard {
 
     private String question = null;
     private String answer = null;
-    
+
     public String getQuestion() {
         return question;
     }
