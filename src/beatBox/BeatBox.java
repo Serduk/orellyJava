@@ -160,7 +160,7 @@ public class BeatBox implements Serializable {
 
 //            do this for each tackts in current row
             for (int j = 0; j < 16; j++) {
-                JCheckBox jc = (JCheckBox) checkBoxList.get(j + (16 * i));
+                JCheckBox jc = checkBoxList.get(j + (16 * i));
 //                if boolean is true -> set key in current array slot
                 if (jc.isSelected()) {
                     trackList[j] = key;
@@ -342,13 +342,9 @@ public class BeatBox implements Serializable {
 
 //            check all checkBoxes in frame, if checkBox is selected -> put him to array
         for (int i = 0; i < instrumentBeatSize; i++) {
-            JCheckBox checkBox = (JCheckBox) checkBoxList.get(i);
+            JCheckBox checkBox = checkBoxList.get(i);
 
-            if (checkBox.isSelected()) {
-                checkboxState[i] = true;
-            } else {
-                checkboxState[i] = false;
-            }
+            checkboxState[i] = checkBox.isSelected();
         }
 
         try {
@@ -372,7 +368,7 @@ public class BeatBox implements Serializable {
         }
 
         for (int i = 0; i < instrumentBeatSize; i++) {
-            JCheckBox check = (JCheckBox) checkBoxList.get(i);
+            JCheckBox check = checkBoxList.get(i);
             if (checkBoxState != null && checkBoxState[i]) {
                 check.setSelected(true);
             } else {
