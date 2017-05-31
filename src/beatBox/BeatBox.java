@@ -2,6 +2,8 @@ package beatBox;
 
 import javax.sound.midi.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,8 +18,8 @@ import java.util.List;
 public class BeatBox implements Serializable {
     private static final int instrumentBeatSize = 256; //instrument size in MIDI class. more than 256 -> cant play
 
-    private String pathToFile = "resources/serializableData/";
-    private String fileName = "lastVersion.ser";
+    private String pathToFile = "resources/serializableData/lastVersion";
+    private String fileExtension = ".ser";
     private JPanel mainPanel;
     private List<JCheckBox> checkBoxList;
     private Sequencer sequencer;
@@ -79,14 +81,23 @@ public class BeatBox implements Serializable {
         buttonBox.add(downTempo);
 
 //        Save data for play on nex time
-        JButton serializableBeats = new JButton("SerializeIt");
-        serializableBeats.addActionListener(new MySerializableDataBeatBox());
+        JButton serializableBeats = new JButton("Save (Serializable)");
+        serializableBeats.addActionListener(new MySavedSerializableDataBeatBox());
         buttonBox.add(serializableBeats);
+
+        JButton saveAs = new JButton("Save As");
+        saveAs.addActionListener(new SaveUsSerializable());
+        buttonBox.add(saveAs);
 
 //        upload data from ser file. last beatBox temp
         JButton restoreLastData = new JButton("Restore");
         restoreLastData.addActionListener(new MyRestoreLastDataFromSerializable());
         buttonBox.add(restoreLastData);
+
+        JButton restoreFromFile = new JButton("Restore From File");
+        restoreFromFile.addActionListener(new RestoreFromFileSerializable());
+        buttonBox.add(restoreFromFile);
+
 
         Box nameBox = new Box(BoxLayout.Y_AXIS);
         for (int i = 0; i < 16; i++) {
@@ -210,54 +221,86 @@ public class BeatBox implements Serializable {
     }
 
     //    for serializable. Add listener to button serializet. for save all data
-    public class MySerializableDataBeatBox implements ActionListener {
+    public class MySavedSerializableDataBeatBox implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 //            create boolean array for save all state
-            boolean[] checkboxState = new boolean[instrumentBeatSize];
-
-//            check all checkBoxes in frame, if checkBox is selected -> put him to array
-            for (int i = 0; i < instrumentBeatSize; i++) {
-                JCheckBox checkBox = (JCheckBox) checkBoxList.get(i);
-
-                if (checkBox.isSelected()) {
-                    checkboxState[i] = true;
-                } else {
-                    checkboxState[i] = false;
-                }
-            }
-
-            try {
-                ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(pathToFile + fileName));
-                outputStream.writeObject(checkboxState);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            makeSoundFile(new File(pathToFile));
         }
     }
 
     public class MyRestoreLastDataFromSerializable implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            boolean[] checkBoxState = null;
-            try {
-                ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(pathToFile + fileName));
-                checkBoxState = (boolean[]) inputStream.readObject();
-            } catch (IOException | ClassNotFoundException ex) {
-                ex.printStackTrace();
+            uploadSoundFile(new File(pathToFile + fileExtension));
+        }
+    }
+
+    /*
+    * Choose place and name for file, and were you want save this file
+    * In This Class we use JFileChooser -> his open another one window, were we select place for file and fileName
+    * Extension for file will be added automatically in method makeSoundFile
+    * */
+    public class SaveUsSerializable implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("save as");
+
+            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            jfc.setDialogTitle("Choose a directory to save your file: ");
+            jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+            /*
+            * Set filter for files in directories
+            * */
+            jfc.setDialogTitle("Save SER file");
+            jfc.setAcceptAllFileFilterUsed(false);
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("only SERIALIZABLE files", "ser", ".ser", "serializable");
+            jfc.addChoosableFileFilter(filter);
+
+            int returnValue = jfc.showSaveDialog(null);
+
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                System.out.println(jfc.getSelectedFile().getPath());
             }
 
-            for (int i = 0; i < instrumentBeatSize; i++) {
-                JCheckBox check = (JCheckBox) checkBoxList.get(i);
-                if (checkBoxState != null && checkBoxState[i]) {
-                    check.setSelected(true);
-                } else {
-                    check.setSelected(false);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                if (jfc.getSelectedFile().isDirectory()) {
+                    System.out.println("You selected the directory: " + jfc.getSelectedFile());
                 }
+                System.out.println(jfc.getSelectedFile());
             }
 
-            sequencer.stop();
-            buildTrackAndStart();
+//SAVE FILE
+            makeSoundFile(jfc.getSelectedFile());
+        }
+    }
+
+    /*
+    * Choose already existed file for restore already existed serializable file
+    * Also was added filter for file choosing.
+    * Only files with extension "ser", ".ser", "serializable" can be uploaded
+    * */
+    public class RestoreFromFileSerializable implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Restore From");
+            JFileChooser uploadFrom = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+            uploadFrom.setDialogTitle("Select SER file for restore data");
+            uploadFrom.setAcceptAllFileFilterUsed(false);
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("only SERIALIZABLE files", "ser", ".ser", "serializable");
+            uploadFrom.addChoosableFileFilter(filter);
+
+            int value = uploadFrom.showOpenDialog(null);
+            // int returnValue = jfc.showSaveDialog(null);
+
+            if (value == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = uploadFrom.getSelectedFile();
+                System.out.println(selectedFile.getAbsolutePath());
+            }
+
+            uploadSoundFile(uploadFrom.getSelectedFile());
         }
     }
 
@@ -283,5 +326,61 @@ public class BeatBox implements Serializable {
             System.out.println("Exception in makeEvent Method");
         }
         return event;
+    }
+
+    /*
+    * TODO: add check condition: if user also add extension in JFileChooser -> split it, and delete
+    * TODO: if user just close window -> add catch for this case
+    *
+    * Method create sound file (save file to selected path)
+    * Take all selected checkBoxes and save all in Serializable file
+    * Method automatically add extension for file like "ser"
+    * */
+    private void makeSoundFile(File path) {
+//            create boolean array for save all state
+        boolean[] checkboxState = new boolean[instrumentBeatSize];
+
+//            check all checkBoxes in frame, if checkBox is selected -> put him to array
+        for (int i = 0; i < instrumentBeatSize; i++) {
+            JCheckBox checkBox = (JCheckBox) checkBoxList.get(i);
+
+            if (checkBox.isSelected()) {
+                checkboxState[i] = true;
+            } else {
+                checkboxState[i] = false;
+            }
+        }
+
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(path + fileExtension));
+            outputStream.writeObject(checkboxState);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /*
+    * Upload ser to application from PC
+    * */
+    private void uploadSoundFile(File path) {
+        boolean[] checkBoxState = null;
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
+            checkBoxState = (boolean[]) inputStream.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        for (int i = 0; i < instrumentBeatSize; i++) {
+            JCheckBox check = (JCheckBox) checkBoxList.get(i);
+            if (checkBoxState != null && checkBoxState[i]) {
+                check.setSelected(true);
+            } else {
+                check.setSelected(false);
+            }
+        }
+
+        sequencer.stop();
+        buildTrackAndStart();
     }
 }
