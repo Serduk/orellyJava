@@ -35,7 +35,7 @@ public class SerializableExample implements Serializable {
         }
 
         try {
-            FileInputStream inputStream = new FileInputStream(filePath+fileName);
+            FileInputStream inputStream = new FileInputStream(filePath + fileName);
             ObjectInputStream os = new ObjectInputStream(inputStream);
 //            System.out.println(os.available());
 
