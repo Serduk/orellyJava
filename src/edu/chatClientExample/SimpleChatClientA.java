@@ -14,7 +14,7 @@ import java.net.Socket;
  * Send data to server (without server)
  * Created by serdyuk on 6/7/17.
  */
-public class SimpleChatClietnA {
+public class SimpleChatClientA {
     String ipAddress = "127.0.0.1";
     int port = 4545;
 
@@ -63,6 +63,6 @@ public class SimpleChatClietnA {
     }
 
     public static void main(String[] args) {
-        new SimpleChatClietnA().go();
+        new SimpleChatClientA().go();
     }
 }
