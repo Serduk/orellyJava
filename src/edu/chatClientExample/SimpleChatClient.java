@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * Simple Chat client
@@ -34,7 +33,7 @@ public class SimpleChatClient {
     public void go() {
         JFrame frame = new JFrame("Ludicrously Chat Client");
         JPanel mainPanel = new JPanel();
-        incoming = new JTextArea(15, 50);
+        incoming = new JTextArea(15, 25);
         incoming.setLineWrap(true);
         incoming.setWrapStyleWord(true);
         incoming.setEditable(false);
@@ -99,13 +98,13 @@ public class SimpleChatClient {
     * and add he in in scrollable text field
     * (use in end \n (new row))
     * */
-    private class IncomingReader implements Runnable {
+    public class IncomingReader implements Runnable {
         @Override
         public void run() {
             String message;
             try {
                 while ((message = reader.readLine()) != null) {
-                    System.out.println("read " + message);
+                    System.out.println("read from server " + message);
                     incoming.append(message + "\n");
                 }
             } catch (Exception ex) {
