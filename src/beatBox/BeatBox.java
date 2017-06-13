@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * TODO: Add chat + Workable ChatServer
+ * TODO: Send already exist track list to another user, who use app
  * BeatBox player
  * Created by serdyuk on 5/24/17.
  */
