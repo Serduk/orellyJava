@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
+ * Examples for Generic + Collections
  * Created by serdyuk on 6/13/17.
  */
 public class JukeBox3 {

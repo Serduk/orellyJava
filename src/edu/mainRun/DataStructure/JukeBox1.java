@@ -13,6 +13,11 @@ import java.util.Collections;
  */
 public class JukeBox1 {
     String pathToSongList = "";
+
+    /*
+    * We add new implementation for class Song
+    * With this implementation (Comparable) we can sort all Objects
+    * */
     ArrayList songList = new ArrayList();
 
     public static void main(String[] args) {

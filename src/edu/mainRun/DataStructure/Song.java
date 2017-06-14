@@ -4,7 +4,7 @@ package edu.mainRun.DataStructure;
  * Examples for work with toString
  * Created by serdyuk on 6/13/17.
  */
-public class Song {
+public class Song implements Comparable<Song> {
     String title;
     String artist;
     String rating;
@@ -35,5 +35,21 @@ public class Song {
 
     public String getTitle(int i) {
         return title.toString();
+    }
+
+    /*
+    * Method Sort() send Object Song in compareTo()
+    * for see, how him correlates with exemplar Song,
+    * from who called method
+    * */
+    @Override
+    public int compareTo(Song o) {
+        /*
+        * Here all simple
+        * We send all work to objects String
+        * who give as variable TITLE,
+        * because we know, String has method compareTo();
+        * */
+        return title.compareTo(o.getTitle());
     }
 }
