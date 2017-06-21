@@ -1,0 +1,11 @@
+setUp and run as a "JAR":
+
+1. Create .txt file in out (bin) folder: manifest.txt
+2. In manifest txt write next text:
+                      Main-Class: PathToYourMainClass
+                      addEnter
+3. jar all package with next command:
+                      jar cvf asd.jar out
+4. Mark your .jar file as executable (in context menu)
+5. For start JAR application, type next command:
+                      java -jar asd.jar
