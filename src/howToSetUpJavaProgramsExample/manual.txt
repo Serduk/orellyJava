@@ -2,7 +2,7 @@ setUp and run as a "JAR":
 
 1. Create .txt file in out (bin) folder: manifest.txt
 2. In manifest txt write next text:
-                      Main-Class: PathToYourMainClass
+                      Main-Class: folder.folder2.PathToYourMainClass
                       addEnter
 3. jar all package with next command:
                       jar cvf asd.jar out
