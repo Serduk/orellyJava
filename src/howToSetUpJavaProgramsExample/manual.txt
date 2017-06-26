@@ -5,7 +5,14 @@ setUp and run as a "JAR":
                       Main-Class: folder.folder2.PathToYourMainClass
                       addEnter
 3. jar all package with next command:
-                      jar cvf asd.jar out
+                      jar cvf asd.jar out    or jar -cvfm asd.jar out
 4. Mark your .jar file as executable (in context menu)
 5. For start JAR application, type next command:
                       java -jar asd.jar
+
+
+
+7. Show all files inside JAR:
+                     jar -tf jarFile
+8. How UnJar files:
+                     jar -xf jarFile

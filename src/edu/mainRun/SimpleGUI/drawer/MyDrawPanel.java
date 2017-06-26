@@ -13,14 +13,14 @@ public class MyDrawPanel extends JPanel {
 //        this.x = x;
 //        this.y = y;
 //    }
-//    public void paintComponent(Graphics graphics) {
+//    public void paintComponent(graphics graphics) {
 //        graphics.setColor(Color.orange);
 //        Image image = new ImageIcon("resources/img/desk.jpg").getImage();
 //        graphics.fillRect(20, 50, 100, 100);
 //        graphics.drawImage(image, 3, 4, this);
 //    }
 //
-//    public void paintComponent(Graphics graphics) {
+//    public void paintComponent(graphics graphics) {
 //        graphics.fillRect(0, 0, this.getWidth(), this.getHeight());
 //
 //        int red = randomizer(255);
