@@ -1,0 +1,9 @@
+How use RMI description:
+
+1. Run "rmic" with realization remote interface
+
+2. Run "rmiregistry"
+                Open terminal and run rmiregistry
+
+3. Run service:
+                Open one more terminal and run service
