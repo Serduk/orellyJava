@@ -1,17 +1,12 @@
 package edu.examplesForRMIMiniServices;
 
 
-import edu.mainRun.Music.animationMusic.MyDrawPanel;
-
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.Sequence;
-import javax.sound.midi.Sequencer;
-import javax.sound.midi.Track;
+import javax.sound.midi.*;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static edu.mainRun.Music.miniMusicPlayers.MiniMusicPlayer1.makeEvent;
 
 /**
  * Class for ServiceServerImpl
@@ -58,6 +53,53 @@ public class MiniMusicService implements Service {
                 sequencer.setTempoInBPM(220);
             } catch (Exception ex) {
                 ex.printStackTrace();
+            }
+        }
+    }
+
+    public MidiEvent makeEvent(int comd, int chan, int one, int two, int tick) {
+        MidiEvent event = null;
+        try {
+            ShortMessage a = new ShortMessage();
+            a.setMessage(comd, chan, one, two);
+            event = new MidiEvent(a, tick);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return event;
+    }
+
+    private class MyDrawPanel extends JPanel implements ControllerEventListener {
+        boolean message = false;
+
+        @Override
+        public void controlChange(ShortMessage event) {
+            message = true;
+            repaint();
+        }
+
+        public Dimension getPreferredSize() {
+            return new Dimension(300, 300);
+        }
+
+        public void paintComponent(Graphics g) {
+            if (message) {
+                Graphics2D g2D = (Graphics2D) g;
+
+                int r = (int) (Math.random() * 250);
+                int gr = (int) (Math.random() * 250);
+                int b = (int) (Math.random() * 250);
+
+                g.setColor(new Color(r, gr, b));
+                int ht = (int) ((Math.random() * 120) + 10);
+                int width = (int) ((Math.random() * 120) + 10);
+
+                int x = (int) ((Math.random() * 40) + 10);
+                int y = (int) ((Math.random() * 40) + 10);
+
+                g.fillRect(x, y, ht, width);
+                message = false;
+
             }
         }
     }
