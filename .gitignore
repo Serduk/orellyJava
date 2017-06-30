@@ -9,3 +9,5 @@
 /test-output/
 /src/core/core.iml
 /orellyJava.iml
+*/.DS_Store
+.DS_Store
