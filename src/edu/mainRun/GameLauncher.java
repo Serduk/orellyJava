@@ -1,5 +1,6 @@
 package edu.mainRun;
 
+import edu.workClasses.EnumExample;
 import edu.workClasses.GuessGame;
 
 public class GameLauncher {
@@ -7,5 +8,8 @@ public class GameLauncher {
 			GuessGame game = new GuessGame();
 
 			game.startGame();
+			if ("winne".equals(EnumExample.Bob)) {
+				System.out.println("Bob Win");
+			}
 		}	
 }
